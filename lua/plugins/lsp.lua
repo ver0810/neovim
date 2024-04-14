@@ -1,5 +1,7 @@
 return {
     "neovim/nvim-lspconfig",
+    cmd = { "Mason", "Neoconf" },
+    event = { "BufReadPost", "BufNewFile" },
     dependencies = {
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig",
@@ -18,7 +20,7 @@ return {
             },
             clangd = {},
             pyright = {},
-        }
+        },
         vim.api.nvim_create_autocmd('LspAttach', {
             group = vim.api.nvim_create_augroup('UserLspConfig', {}),
             callback = function(ev)
@@ -39,7 +41,6 @@ return {
                     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
                 end, opts)
 
-
                 vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
                 vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
                 vim.keymap.set('n', '<space>f', function()
@@ -47,15 +48,18 @@ return {
                 end, opts)
             end,
         })
+
+        require("neoconf").setup()
+        require("neodev").setup()
         require("mason").setup()
-        local capabilities = require('cmp_nvim_lsp').default_capabilities()
+        local capabilitie = require('cmp_nvim_lsp').default_capabilities()
         require("mason-lspconfig").setup({
             ensure_installed = vim.tbl_keys(servers),
             handlers = {
-                function(serven_name)
+                function(server_name)
                     require("lspconfig")[server_name].setup {
                         settings = servers[server_name],
-                        capabilities = capabilities
+                        capabilities = capabilitie
                     }
                 end
             }
