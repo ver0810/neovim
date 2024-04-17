@@ -1,22 +1,62 @@
 return {
-    {
-        "folke/tokyonight.nvim",
-        dependencies = {
-            "nvim-lualine/lualine.nvim",
-            "nvim-tree/nvim-web-devicons",
-            "utilyre/barbecue.nvim",
-            "SmiteshP/nvim-navic",
+
+
+  -- tokyonight
+  {
+      "folke/tokyonight.nvim",
+      lazy = false,
+      priority = 1000,
+      opts = {},
+  },
+  -- catppuccin
+  {
+    "catppuccin/nvim",
+    lazy = true,
+    name = "catppuccin",
+    opts = {
+      integrations = {
+        aerial = true,
+        alpha = true,
+        cmp = true,
+        dashboard = true,
+        flash = true,
+        gitsigns = true,
+        headlines = true,
+        illuminate = true,
+        indent_blankline = { enabled = true },
+        leap = true,
+        lsp_trouble = true,
+        mason = true,
+        markdown = true,
+        mini = true,
+        native_lsp = {
+          enabled = true,
+          underlines = {
+            errors = { "undercurl" },
+            hints = { "undercurl" },
+            warnings = { "undercurl" },
+            information = { "undercurl" },
+          },
         },
-        config = function()
-            vim.cmd[[colorscheme tokyonight-storm]]
-            require('lualine').setup({
-                options = {
-                    theme = 'tokyonight'
-                },
-            })
-            require('barbecue').setup {
-                theme = 'tokyonight',
-            }
-        end
+        navic = { enabled = true, custom_bg = "lualine" },
+        neotest = true,
+        neotree = true,
+        noice = true,
+        notify = true,
+        semantic_tokens = true,
+        telescope = true,
+        treesitter = true,
+        treesitter_context = true,
+        which_key = true,
+      },
     },
+  },
+
+  -- rose pine
+  { 
+      "rose-pine/neovim", 
+      name = "rose-pine" 
+  },
+
 }
+

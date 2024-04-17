@@ -27,4 +27,24 @@ return {
             require('illuminate').configure()
         end
     },
+    {"nvim-lualine/lualine.nvim",
+        config = function()
+            require('lualine').setup({
+                opts = {
+                    theme = 'auto'
+                }
+            })
+        end
+    },
+    {"nvim-tree/nvim-web-devicons"},
+    {
+        "utilyre/barbecue.nvim",
+        config = function ()
+            require('barbecue').setup({
+                theme = 'auto'
+            })
+        end
+    },
+    {"SmiteshP/nvim-navic"},
 }
+

@@ -7,6 +7,7 @@ return {
         "williamboman/mason-lspconfig",
         "folke/neoconf.nvim",
         "folke/neodev.nvim",
+        'nvimdev/lspsaga.nvim',
     },
     config = function()
         local servers = {
@@ -51,6 +52,7 @@ return {
 
         require("neoconf").setup()
         require("neodev").setup()
+        require('lspsaga').setup()
         require("mason").setup()
         local capabilitie = require('cmp_nvim_lsp').default_capabilities()
         require("mason-lspconfig").setup({
