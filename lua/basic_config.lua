@@ -4,6 +4,7 @@ local global = vim.g
 
 
 -- Globol Settings --
+option.textwidth = 80
 option.showmode = false
 option.backspace = { "indent", "eol", "start" }
 option.tabstop = 4
@@ -31,8 +32,9 @@ option.mouse = "a"
 option.undofile = true
 option.undodir = vim.fn.expand('$HOME/.local/share/nvim/undo')
 option.exrc = true
-option.wrap = false
+option.wrap = true
 option.splitright = true
+option.conceallevel = 1
 
 -- Buffer Settings --
 buffer.fileenconding = "utf-8"

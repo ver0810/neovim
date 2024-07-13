@@ -43,5 +43,28 @@ return {
        },
        ft = { "markdown" },
    },
+    
+   --obsidian.nvim
+   {
+       "epwalsh/obsidian.nvim",
+       version = "*",  -- recommended, use latest release instead of latest commit
+       lazy = true,
+       ft = "markdown",
+       dependencies = {
+           "nvim-lua/plenary.nvim",
+       },
+       opts = {
+           workspaces = {
+               {
+                   name = "Obsidian_Note",
+                   path = "~/Code/Obsidian_Notes"
+               },
+           },
+           completion = {
+               nvim_cmp = true,
+               min_char = 2,
+           }
+       }
+   },
 }
 
