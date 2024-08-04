@@ -42,4 +42,4 @@ buffer.fileenconding = "utf-8"
 -- Global Settings --
 global.mapleader = " "
 
-
+vim.g.bigfile_size = 1024 * 1024 * 1.5

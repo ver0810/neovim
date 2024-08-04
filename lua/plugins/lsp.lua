@@ -7,7 +7,6 @@ return {
         "williamboman/mason-lspconfig",
         "folke/neoconf.nvim",
         "folke/neodev.nvim",
-        'nvimdev/lspsaga.nvim',
     },
     config = function()
         local servers = {
@@ -21,7 +20,8 @@ return {
             },
             clangd = {},
             pyright = {},
-        },
+        }
+
         vim.api.nvim_create_autocmd('LspAttach', {
             group = vim.api.nvim_create_augroup('UserLspConfig', {}),
             callback = function(ev)
@@ -52,16 +52,16 @@ return {
 
         require("neoconf").setup()
         require("neodev").setup()
-        require('lspsaga').setup()
         require("mason").setup()
-        local capabilitie = require('cmp_nvim_lsp').default_capabilities()
+        local capabilities = require('cmp_nvim_lsp').default_capabilities()
         require("mason-lspconfig").setup({
             ensure_installed = vim.tbl_keys(servers),
             handlers = {
                 function(server_name)
                     require("lspconfig")[server_name].setup {
                         settings = servers[server_name],
-                        capabilities = capabilitie
+                        on_attach = callback,
+                        capabilities = capabilities,
                     }
                 end
             }

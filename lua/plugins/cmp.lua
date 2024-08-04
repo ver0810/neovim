@@ -3,9 +3,8 @@ return {
     dependencies = {
         'hrsh7th/cmp-nvim-lsp',
         'hrsh7th/cmp-path',
-        'hrsh7th/cmp-buffer',
+        "hrsh7th/cmp-buffer",
         'hrsh7th/cmp-cmdline',
-        "saadparwaiz1/cmp_luasnip",
         {
             "saadparwaiz1/cmp_luasnip",
             dependencies = {
@@ -19,17 +18,18 @@ return {
 
     config = function()
 
-        local has_words_before = function()
-            unpack = unpack or table.unpack
-            local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-            return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-        end,
 
         vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
         -- Set up nvim-cmp.
         require("luasnip.loaders.from_vscode").lazy_load()
         local luasnip = require 'luasnip'
         local cmp = require'cmp'
+
+        local has_words_before = function()
+            unpack = unpack or table.unpack
+            local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+            return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+        end
 
         cmp.setup({
 
@@ -38,39 +38,63 @@ return {
                     require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
                 end,
             },
-            sources = cmp.config.sources {
-                { name = 'nvim_lsp' },
-                { name = 'luasnip' },
-                { name = 'buffer' },
-                { name = 'path' },
-            },
       
             mapping = {
-
-                ["<Tab>"] = cmp.mapping(function(fallback)
+                -- ... rest of your mappings
+                ['<Tab>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
-                        cmp.select_next_item()
-                        -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable() 
-                        -- that way you will only jump inside the snippet region
-                    elseif luasnip.expand_or_jumpable() then
-                        luasnip.expand_or_jump()
+                        if #cmp.get_entries() == 1 then
+                            cmp.confirm({ select = true })
+                        else
+                            cmp.select_next_item()
+                        end
                     elseif has_words_before() then
                         cmp.complete()
+                        if #cmp.get_entries() == 1 then
+                            cmp.confirm({ select = true })
+                        end
                     else
                         fallback()
                     end
                 end, { "i", "s" }),
-                
-                ["<S-Tab>"] = cmp.mapping(function(fallback)
-                    if cmp.visible() then
-                        cmp.select_prev_item()
-                    elseif luasnip.jumpable(-1) then
-                        luasnip.jump(-1)
-                    else
-                        fallback()
+
+            },
+
+            formatting = {
+                format = function(entry, item)
+
+                    local widths = {
+                        abbr = vim.g.cmp_widths and vim.g.cmp_widths.abbr or 40,
+                        menu = vim.g.cmp_widths and vim.g.cmp_widths.menu or 30,
+                    }
+
+                    for key, width in pairs(widths) do
+                        if item[key] and vim.fn.strdisplaywidth(item[key]) > width then
+                            item[key] = vim.fn.strcharpart(item[key], 0, width - 1) .. "…"
+                        end
                     end
-                end, { "i", "s" }),
-                ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+
+                    return item
+                end,
+            },
+            sources = cmp.config.sources ({
+                { name = 'nvim_lsp'},
+                { name = 'path' },
+            },{
+                { name = 'buffer'},
+            }),
+
+            window = {
+                completion = {
+                    border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+                    winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:CursorLine,Search:Search",
+                    col_offset = 0,
+                    side_padding = 1,
+                },
+                documentation = {
+                    border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+                    winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:CursorLine,Search:Search",
+                },
             },
 
         })
