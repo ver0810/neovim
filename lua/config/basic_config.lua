@@ -43,3 +43,10 @@ buffer.fileenconding = "utf-8"
 global.mapleader = " "
 
 vim.g.bigfile_size = 1024 * 1024 * 1.5
+
+
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+  border = "rounded",
+  max_width = 80,  -- 设置最大宽度
+  max_height = 20, -- 设置最大高度
+})

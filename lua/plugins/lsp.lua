@@ -20,6 +20,7 @@ return {
             },
             clangd = {},
             pyright = {},
+            ruff = {},
         }
 
         vim.api.nvim_create_autocmd('LspAttach', {
@@ -60,10 +61,10 @@ return {
                 function(server_name)
                     require("lspconfig")[server_name].setup {
                         settings = servers[server_name],
-                        on_attach = callback,
                         capabilities = capabilities,
                     }
-                end
+                end,
+
             }
         })
     end

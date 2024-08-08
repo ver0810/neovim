@@ -2,7 +2,7 @@ local map = vim.keymap.set
 local opt = {noremap = true, silent = true}
 
 -- open terminal 
-map({"n", "t"}, "<C-/>", "<cmd>Lspsaga term_toggle<cr>",{desc = "open the terminal"})
+map({"n", "t"}, "<C-/>", "<cmd>belowright split | terminal /usr/bin/fish<cr>",{desc = "open the terminal"})
 
 -- better up/down
 map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })

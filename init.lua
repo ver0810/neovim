@@ -1,5 +1,6 @@
-require("basic_config")
-require("keymap")
-require("lazy_nvim")
+require("config/basic_config")
+require("config/keymap")
+require("config/lazy_nvim")
+require('config.run_python')
 
 vim.cmd[[colorscheme rose-pine-main]]
