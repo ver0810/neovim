@@ -21,6 +21,9 @@ return {
             clangd = {},
             pyright = {},
             ruff = {},
+            html = {},
+            cssls = {},
+            tsserver = {},
         }
 
         vim.api.nvim_create_autocmd('LspAttach', {
